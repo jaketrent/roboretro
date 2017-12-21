@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"jaketrent.com/roboretro/messages"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -28,7 +29,11 @@ func main() {
 	db.AutoMigrate(&messages.Message{})
 
 	router := gin.Default()
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
 	router.Use(hasDatabase(db))
 	messages.Mount(router)
+	router.GET("/", func(c *gin.Context) { c.Redirect(http.StatusPermanentRedirect, "/ui") })
+	router.Static("/ui", "./client/build")
 	router.Run()
 }

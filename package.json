@@ -1,0 +1,20 @@
+{
+  "name": "roboretro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaketrent/roboretro.git"
+  },
+  "keywords": [],
+  "author": "jaketrent",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jaketrent/roboretro/issues"
+  },
+  "homepage": "https://github.com/jaketrent/roboretro#readme"
+}

@@ -2,10 +2,11 @@
 
 import AppBar from 'material-ui/AppBar'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
-import gravatarUrl from 'gravatar-url'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import React, { Component } from 'react'
+
 import './App.css'
+import gravatarUrl from './gravatar-url'
 
 type Props = {}
 
@@ -40,7 +41,7 @@ class App extends Component<Props, State> {
     }
   }
   componentDidMount() {
-    fetch('http://localhost:3004/api/v1/messages')
+    fetch('/api/v1/messages')
       .then(res => {
         if (res.status !== 200) {
           console.log('response err', res)

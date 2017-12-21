@@ -1,9 +1,9 @@
 {
   "name": "roboretro-ui",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "gravatar-url": "^2.0.0",
+    "flow-bin": "^0.61.0",
     "isomorphic-fetch": "^2.2.1",
     "material-ui": "^0.20.0",
     "react": "^16.2.0",
@@ -16,7 +16,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "devDependencies": {
-    "flow-bin": "^0.61.0"
-  }
+  "proxy": "http://localhost:3004",
+  "homepage": "https://roboretro.herokuapp.com/ui"
 }
