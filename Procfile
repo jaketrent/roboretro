@@ -1,1 +1,1 @@
-web: go build && ./roboretro
+web: ./bin/roboretro
