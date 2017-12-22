@@ -23,7 +23,7 @@ func create(c *gin.Context) {
 
 	var msg *Message
 	var err error
-	err = c.BindJSON(&msg)
+	err = c.Bind(&msg)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, bad{
