@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"net/http"
+	"os"
+	"time"
 )
 
 type ok struct {
@@ -18,12 +20,24 @@ type bad struct {
 	Errors []*clienterr `json:"errors"`
 }
 
+func createMessage(userName string, text string) *Message {
+	return &Message{
+		Name:  userName,
+		Email: "TODO",
+		Date:  time.Time{}.Unix(),
+		Text:  text,
+	}
+}
+
 func create(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
+	slackToken := os.Getenv("SLACK_VERIFICATION_TOKEN")
 
 	var msg *Message
 	var err error
-	err = c.Bind(&msg)
+	token := c.PostForm("token")
+	userName := c.PostForm("user_name")
+	text := c.PostForm("text")
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, bad{
@@ -33,6 +47,15 @@ func create(c *gin.Context) {
 		return
 	}
 
+	if token != slackToken {
+		c.JSON(http.StatusUnauthorized, bad{
+			Errors: []*clienterr{{"Invalid credentials", http.StatusUnauthorized}},
+		})
+		fmt.Println("invalid slack token", token)
+		return
+	}
+
+	msg = createMessage(userName, text)
 	msg, err = insert(db, msg)
 
 	if err != nil {
