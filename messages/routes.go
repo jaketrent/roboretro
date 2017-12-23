@@ -20,10 +20,14 @@ type bad struct {
 	Errors []*clienterr `json:"errors"`
 }
 
-func createMessage(userName string, text string) *Message {
+func createMessage(userId string, userName string, text string) *Message {
+	email, err := getUserEmail(userId)
+	if err != nil {
+		email = "Unknown"
+	}
 	return &Message{
 		Name:  userName,
-		Email: "TODO",
+		Email: email,
 		Date:  time.Now().Unix(),
 		Text:  text,
 	}
@@ -36,6 +40,7 @@ func create(c *gin.Context) {
 	var msg *Message
 	var err error
 	token := c.PostForm("token")
+	userId := c.PostForm("user_id")
 	userName := c.PostForm("user_name")
 	text := c.PostForm("text")
 
@@ -55,7 +60,7 @@ func create(c *gin.Context) {
 		return
 	}
 
-	msg = createMessage(userName, text)
+	msg = createMessage(userId, userName, text)
 	msg, err = insert(db, msg)
 
 	if err != nil {
