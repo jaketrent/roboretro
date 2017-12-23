@@ -65,7 +65,7 @@ func create(c *gin.Context) {
 		return
 	}
 
-	c.String(http.StatusOK, "Thanks %s, posted!", userName)
+	c.String(http.StatusOK, "Thanks %s, posted! Checkout https://roboretro.herokuapp.com/", userName)
 }
 
 func list(c *gin.Context) {
