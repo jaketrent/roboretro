@@ -21,23 +21,36 @@ type State = {
   messages: Message[]
 }
 
+const formatDate = epoch => {
+  const date = new Date(0)
+  date.setUTCSeconds(epoch)
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ]
+
+  var day = date.getDate()
+  var monthIndex = date.getMonth()
+  var year = date.getFullYear()
+
+  return day + ' ' + monthNames[monthIndex] + ' ' + year
+}
+
 class App extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      messages: [
-        {
-          name: 'Jakeroo',
-          email: 'trent.jake@gmail.com',
-          date: '27 Dec 2017',
-          text: `
-            Key players will take ownership of their innovations by virtually
-            growing mobile stakeholders. We aim to globally virtualise our
-            architecture by ethically reusing our immersive end-to-end user
-            experiences.
-`
-        }
-      ]
+      messages: []
     }
   }
   componentDidMount() {
@@ -64,7 +77,7 @@ class App extends Component<Props, State> {
             <Card expanded key={i}>
               <CardHeader
                 title={msg.name}
-                subtitle={msg.date}
+                subtitle={formatDate(msg.date)}
                 avatar={gravatarUrl(msg.email)}
               />
               <CardText>{msg.text}</CardText>
