@@ -45,17 +45,13 @@ func create(c *gin.Context) {
 	text := c.PostForm("text")
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, bad{
-			Errors: []*clienterr{{"Bad request", http.StatusBadRequest}},
-		})
+		c.String(http.StatusBadRequest, "Bad request")
 		fmt.Println("message create req error", err)
 		return
 	}
 
 	if token != slackToken {
-		c.JSON(http.StatusUnauthorized, bad{
-			Errors: []*clienterr{{"Invalid credentials", http.StatusUnauthorized}},
-		})
+		c.String(http.StatusUnauthorized, "Invalid credentials")
 		fmt.Println("invalid slack token", token)
 		return
 	}
@@ -64,16 +60,12 @@ func create(c *gin.Context) {
 	msg, err = insert(db, msg)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, bad{
-			Errors: []*clienterr{{Title: "Create error", Status: http.StatusInternalServerError}},
-		})
+		c.String(http.StatusInternalServerError, "Create error")
 		fmt.Println("message create db error", err)
 		return
 	}
 
-	c.JSON(http.StatusOK, struct {
-		Data *Message `json:"data"`
-	}{msg})
+	c.String(http.StatusOK, "Thanks %s, posted!", userName)
 }
 
 func list(c *gin.Context) {
