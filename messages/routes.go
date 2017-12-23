@@ -24,7 +24,7 @@ func createMessage(userName string, text string) *Message {
 	return &Message{
 		Name:  userName,
 		Email: "TODO",
-		Date:  time.Time{}.Unix(),
+		Date:  time.Now().Unix(),
 		Text:  text,
 	}
 }
